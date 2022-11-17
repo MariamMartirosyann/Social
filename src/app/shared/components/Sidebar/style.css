@@ -1,0 +1,8 @@
+.listItem{
+   margin: 10px 0;
+   background: rgb(248, 240, 240);
+   border-radius: 10px;
+}
+.decorationNon{
+   text-decoration: none;
+}
