@@ -1,10 +1,17 @@
 import { useParams } from "react-router-dom";
+import BackgroundImage from "../../assests/images/bgg.webp";
+import "./style.css";
 
 const UserItem = () => {
-    const { id } = useParams();
+  const { id } = useParams();
   return (
-    <div>UserItem {id}</div>
-  )
-}
+    <div className="mainItem">
+      <div className="bg">
+        <img src={BackgroundImage} alt="BackgroundImage" />
+      </div>
+      UserItem {id}
+    </div>
+  );
+};
 
-export default UserItem
+export default UserItem;
