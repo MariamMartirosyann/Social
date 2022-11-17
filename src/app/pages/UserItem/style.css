@@ -1,6 +1,5 @@
-.mainItem{
-    position: relative;
-}
-.bg{
-    position: absolute;
+
+.user{
+    border:1px solid grey;
+    border-radius: 20px;
 }

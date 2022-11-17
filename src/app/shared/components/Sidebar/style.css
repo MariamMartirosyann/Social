@@ -1,8 +1,13 @@
 .listItem{
    margin: 10px 0;
-   background: rgb(248, 240, 240);
+   background:white;
    border-radius: 10px;
 }
 .decorationNon{
    text-decoration: none;
+}
+.sidebar{
+   border:1px solid grey;
+   padding:10px;
+   border-radius: 20px;
 }

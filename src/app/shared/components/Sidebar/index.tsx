@@ -9,16 +9,19 @@ import {
   ListItemText,
   ListItemButton,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { usersData } from "../../../pages/homePage/constants";
 import { Link } from "react-router-dom";
 import "./style.css";
 
+
 const Sidebar = () => {
   return (
-    <Grid container>
+    <Grid container className="sidebar">
       Sidebar
       <Grid item xs={12}>
+     
         <Divider />
 
         <List>
