@@ -1,5 +1,38 @@
 .user {
+  background: url(../../assests/images/bg.jpg) no-repeat center center / cover;
   width: 100%;
-  height: 70vh;
-  margin: 0 30px;
+  height: 100%;
+}
+.userTop {
+  background: white;
+  padding: 7px  25px;
+  border: 1px solid rgb(232, 229, 229);
+  position: relative;
+}
+.inputIcon {
+  position: fixed;
+  bottom: 5%;
+  right: 15%;
+  border-radius: 50%;
+  background: white;
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+}
+.iconsDiv {
+  position: absolute;
+  right: 20px;
+  top:15px
+}
+.icon {
+  margin: 0 10px;
+  color: grey;
+}
+.lastSeen{
+  color:grey;
+  font-size: 14px;
+}
+.name{
+  font-size: 20px;
+  font-weight: 700;
 }
