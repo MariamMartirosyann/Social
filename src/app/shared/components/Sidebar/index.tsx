@@ -1,29 +1,24 @@
-import {
-  Divider,
-  Grid,
-  List,
-  Toolbar,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  ListItemButton,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { Grid, List, Avatar, Typography } from "@mui/material";
 import { usersData } from "../../../pages/homePage/constants";
 import { Link } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
 import "./style.css";
-
 
 const Sidebar = () => {
   return (
-    <Grid container className="sidebar">
-      Sidebar
-      <Grid item xs={12}>
-     
-        <Divider />
+    <Grid container className="sidebar" >
+      <div className="sideBarTop">
+        <div className="menu">
+          <MenuIcon />
+        </div>
+        <div className="search">
+          <SearchIcon />
+          <Typography mx={2}>Search </Typography>
+        </div>
+      </div>
 
+      <Grid item xs={12}>
         <List>
           {usersData?.map((user) => {
             return (
@@ -32,24 +27,15 @@ const Sidebar = () => {
                 key={user.id}
                 className="decorationNon"
               >
-                <ListItem className="listItem">
-                  <ListItemButton>
-                    <ListItemAvatar>
-                      <Avatar src={user.src} sx={{ width: 40, height: 40 }} />
-                    </ListItemAvatar>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div>
-                        <ListItemText>
-                          <Typography variant="h6">{user.name}</Typography>
-                        </ListItemText>
-                      </div>
-                      <div>
-                        {" "}
-                        <ListItemText>{user.text}</ListItemText>
-                      </div>
-                    </div>
-                  </ListItemButton>
-                </ListItem>
+                <div className="listItem">
+                  <div>
+                    <Avatar src={user.src} className="avatarDiv" />
+                  </div>
+                  <div className="textDiv">
+                    <Typography variant="h6">{user.name}</Typography>
+                    <Typography >{user.text}</Typography>
+                  </div>
+                </div>
               </Link>
             );
           })}
