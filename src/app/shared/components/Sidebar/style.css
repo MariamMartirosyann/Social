@@ -61,12 +61,12 @@ height:50px ;
    overflow: scroll;
 }
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px rgb(152, 151, 151); 
   border-radius: 5px;
 }
  

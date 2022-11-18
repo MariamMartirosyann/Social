@@ -15,10 +15,8 @@ const UserItem = () => {
   return (
     <div className="user">
       <Grid container className="userTop" spacing={0}>
-        <Grid item xs={2}>
-          <ListItemAvatar>
-            <Avatar src={user?.src} sx={{ width: 45, height: 45 }} />
-          </ListItemAvatar>
+        <Grid item style={{width:"60px"}}>
+          <Avatar src={user?.src} sx={{ width: 45, height: 45 }} />
         </Grid>
         <Grid item xs={8}>
           <div className="name">
@@ -27,10 +25,15 @@ const UserItem = () => {
           <div className="lastSeen">last seen recently</div>
         </Grid>
         <div className="iconsDiv">
-          <span className="icon"><SearchIcon /></span>
-          <span className="icon"><CallOutlinedIcon /></span>
-          <span className="icon"><MoreVertOutlinedIcon /></span>
-            
+          <span className="icon">
+            <SearchIcon />
+          </span>
+          <span className="icon">
+            <CallOutlinedIcon />
+          </span>
+          <span className="icon">
+            <MoreVertOutlinedIcon />
+          </span>
         </div>
       </Grid>
       UserItem {id}
