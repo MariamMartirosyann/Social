@@ -1,5 +1,5 @@
-import { Avatar, Grid, ListItemAvatar, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Avatar, Grid } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
 import Input from "../../shared/components/Input";
 import { usersData } from "../homePage/constants";
 import { userTexts } from "../homePage/constants";
@@ -8,12 +8,26 @@ import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import Triangle from "../../assests/images/triangle.svg";
 import "./style.css";
+import { useSelector } from "react-redux";
+import  { selectMyAnswer } from "../../store/myAnswer";
+import { Fragment, useRef } from "react";
+import { HashScroll } from "react-hash-scroll";
+
 
 const UserItem = () => {
   const { id } = useParams();
+  const ref = useRef<any>(null);
   const user = usersData.find((user) => user.id === Number(id));
-  console.log(user, "user");
+  const myAnswerList = useSelector(selectMyAnswer);
 
+
+  const handleClick =()=>{
+    ref.current?.scrollIntoView({behavior: 'smooth',block: "end"});
+   
+    console.log(ref.current,"ref. current")
+    console.log("scrollllll")
+  
+  }
   return (
     <div className="user">
       <Grid container className="userTop" spacing={0}>
@@ -38,19 +52,20 @@ const UserItem = () => {
           </span>
         </div>
       </Grid>
-      <Grid container className="conversation">
+      <Grid container    ref={ref} className="conversation" id="box">
+        
         {userTexts.map((text) => {
           return (
-            <>
+            <Fragment key={text.id}>
               <Grid container my={3} mx={25}>
-                <Grid item className="userAnswer" key={text.id}>
+                <Grid item className="userAnswer">
                   <span className="tail">
                     <img src={Triangle} alt="triangle" />
                   </span>
                   {text?.text} <span className="timeSpan">{text.time}</span>
                 </Grid>
               </Grid>
-              <Grid container className="myAnswer" key={text.id} mx={90}>
+              <Grid container className="myAnswer" mx={90}>
                 <span className="myAnswerSpan">{text?.myAnswer}</span>
                 <span className="myTimeSpan">{text?.myAnswertime}</span>
 
@@ -58,12 +73,29 @@ const UserItem = () => {
                   <img src={Triangle} alt="triangle" />
                 </span>
               </Grid>
-            </>
+            </Fragment>
           );
         })}
+        {myAnswerList.map(myAnswer=>{
+      return(
+        <Grid container className="myAnswer"  key={myAnswer.id} my={3}mx={90}>
+        <span className="myAnswerSpan">{myAnswer?.myAnswer}</span>
+        <span className="myTimeSpan">14.14</span>
+
+        <span className="tailMyAnswer">
+          <img src={Triangle} alt="triangle" />
+        </span>
       </Grid>
+      )
+     })}
+    
+          <div>end</div>
+       
+      </Grid>
+     
       UserItem {id}
-      <Input />
+      
+      <Input onClick={handleClick}/>
     </div>
   );
 };

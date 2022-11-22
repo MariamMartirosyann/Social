@@ -5,7 +5,7 @@
   position: fixed;
 }
 .conversation {
-  height: 80vh;
+  height: 75vh;
   overflow-x: hidden;
   overflow-y: scroll;
 }
