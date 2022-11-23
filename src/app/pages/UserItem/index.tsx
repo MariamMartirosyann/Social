@@ -1,5 +1,5 @@
 import { Avatar, Grid } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Input from "../../shared/components/Input";
 import { usersData } from "../homePage/constants";
 import { userTexts } from "../homePage/constants";
@@ -7,10 +7,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import Triangle from "../../assests/images/triangle.svg";
+import { format } from "date-fns";
 import "./style.css";
 import { useSelector } from "react-redux";
 import { selectMyAnswer } from "../../store/myAnswer";
 import { Fragment, useEffect, useRef } from "react";
+import { DATE_FORMAT, HOUR_FORMAT } from "../../constants";
 
 const UserItem = () => {
   const { id } = useParams();
@@ -80,7 +82,7 @@ const UserItem = () => {
               mx={90}
             >
               <span className="myAnswerSpan">{myAnswer?.myAnswer}</span>
-              <span className="myTimeSpan">14.14</span>
+              <span className="myTimeSpan">{format(new Date(), ` ${HOUR_FORMAT}`)}</span>
 
               <span className="tailMyAnswer">
                 <img src={Triangle} alt="triangle" />
