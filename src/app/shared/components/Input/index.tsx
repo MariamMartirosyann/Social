@@ -14,7 +14,7 @@ interface IFormData {
 }
 
 
-const Input = ({onClick}:{ onClick: () => void }): JSX.Element => {
+const Input = (): JSX.Element => {
   const dispatch = useDispatch();
   const methods = useForm<IFormData>({
     defaultValues: {
@@ -32,7 +32,6 @@ const Input = ({onClick}:{ onClick: () => void }): JSX.Element => {
     console.log(newFormData);
     dispatch(addMyAnswer(newFormData));
     reset()
-    onClick()
   };
 
   const handleKeyDown=(event:any)=>{

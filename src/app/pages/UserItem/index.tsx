@@ -9,10 +9,8 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import Triangle from "../../assests/images/triangle.svg";
 import "./style.css";
 import { useSelector } from "react-redux";
-import  { selectMyAnswer } from "../../store/myAnswer";
-import { Fragment, useRef } from "react";
-import { HashScroll } from "react-hash-scroll";
-
+import { selectMyAnswer } from "../../store/myAnswer";
+import { Fragment, useEffect, useRef } from "react";
 
 const UserItem = () => {
   const { id } = useParams();
@@ -21,13 +19,10 @@ const UserItem = () => {
   const myAnswerList = useSelector(selectMyAnswer);
 
 
-  const handleClick =()=>{
-    ref.current?.scrollIntoView({behavior: 'smooth',block: "end"});
-   
-    console.log(ref.current,"ref. current")
-    console.log("scrollllll")
-  
-  }
+
+  useEffect(()=>{
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  },[myAnswerList])
   return (
     <div className="user">
       <Grid container className="userTop" spacing={0}>
@@ -52,8 +47,7 @@ const UserItem = () => {
           </span>
         </div>
       </Grid>
-      <Grid container    ref={ref} className="conversation" id="box">
-        
+      <Grid container className="conversation" id="box">
         {userTexts.map((text) => {
           return (
             <Fragment key={text.id}>
@@ -76,26 +70,31 @@ const UserItem = () => {
             </Fragment>
           );
         })}
-        {myAnswerList.map(myAnswer=>{
-      return(
-        <Grid container className="myAnswer"  key={myAnswer.id} my={3}mx={90}>
-        <span className="myAnswerSpan">{myAnswer?.myAnswer}</span>
-        <span className="myTimeSpan">14.14</span>
+        {myAnswerList.map((myAnswer) => {
+          return (
+            <Grid
+              container
+              className="myAnswer"
+              key={myAnswer.id}
+              my={3}
+              mx={90}
+            >
+              <span className="myAnswerSpan">{myAnswer?.myAnswer}</span>
+              <span className="myTimeSpan">14.14</span>
 
-        <span className="tailMyAnswer">
-          <img src={Triangle} alt="triangle" />
-        </span>
+              <span className="tailMyAnswer">
+                <img src={Triangle} alt="triangle" />
+              </span>
+            </Grid>
+          );
+        })}
+
+        <Grid container ref={ref}>
+          end
+        </Grid>
       </Grid>
-      )
-     })}
-    
-          <div>end</div>
-       
-      </Grid>
-     
       UserItem {id}
-      
-      <Input onClick={handleClick}/>
+      <Input  />
     </div>
   );
 };
