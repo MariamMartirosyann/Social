@@ -10,21 +10,27 @@ import Triangle from "../../assests/images/triangle.svg";
 import { format } from "date-fns";
 import "./style.css";
 import { useSelector } from "react-redux";
-import { selectMyAnswer } from "../../store/myAnswer";
-import { Fragment, useEffect, useRef } from "react";
+import myAnswer, { selectMyAnswer } from "../../store/myAnswer";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { DATE_FORMAT, HOUR_FORMAT } from "../../constants";
+import { IMyAnswer } from "../../store/interfaces/myAnswer";
 
 const UserItem = () => {
   const { id } = useParams();
   const ref = useRef<any>(null);
   const user = usersData.find((user) => user.id === Number(id));
-  const myAnswerList = useSelector(selectMyAnswer);
 
 
+   const myAnswerList = useSelector(selectMyAnswer);
+  // const myNewAnswer = JSON.parse(localStorage.getItem("myAnswer") || '{}');
+  // console.log(myNewAnswer,"myNewAnswer")
+  
 
-  useEffect(()=>{
+
+ 
+  useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  },[myAnswerList])
+  }, [myAnswerList]);
   return (
     <div className="user">
       <Grid container className="userTop" spacing={0}>
@@ -82,7 +88,9 @@ const UserItem = () => {
               mx={90}
             >
               <span className="myAnswerSpan">{myAnswer?.myAnswer}</span>
-              <span className="myTimeSpan">{format(new Date(), ` ${HOUR_FORMAT}`)}</span>
+              <span className="myTimeSpan">
+                {format(new Date(), ` ${HOUR_FORMAT}`)}
+              </span>
 
               <span className="tailMyAnswer">
                 <img src={Triangle} alt="triangle" />
@@ -90,13 +98,12 @@ const UserItem = () => {
             </Grid>
           );
         })}
-
         <Grid container ref={ref}>
           end
         </Grid>
       </Grid>
       UserItem {id}
-      <Input  />
+      <Input />
     </div>
   );
 };

@@ -30,6 +30,9 @@ const Input = (): JSX.Element => {
       myAnswer: formData.myAnswer,
     };
     console.log(newFormData);
+
+   
+    //localStorage.setItem("myAnswer",  JSON.stringify(newFormData))
     dispatch(addMyAnswer(newFormData));
     reset()
   };
