@@ -32,7 +32,6 @@ const LoginPage = () => {
         <div className="loginBox">
           <div>
             <Typography variant="h5" my={3}>
-              {" "}
               My Chat
             </Typography>
           </div>
@@ -52,7 +51,7 @@ const LoginPage = () => {
           </FormProvider>
           <div>
             <p>
-              You don't have account???{" "}
+              You don't have account???
               <Link to={ERoutes.REGISTER}>Register</Link>
             </p>
           </div>

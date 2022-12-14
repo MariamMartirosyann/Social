@@ -5,70 +5,71 @@ import { requiredRules } from "../../constants";
 import { ERoutes } from "../../routes/constants";
 import BasicInput from "../../shared/components/basicInput";
 import AddAvatar from "../../assests/images/addAvatar.png";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import { auth,storage } from "../../../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { auth, db, storage } from "../../../firebase";
 import "./style.css";
 import { useState } from "react";
+import { doc, setDoc } from "firebase/firestore";
 
 const Registration = () => {
   const [err, setErr] = useState<boolean>(false);
 
   interface IFormData {
     email: string;
-    name: string;
+    displayName: string;
     password: string;
-    avatar: any;
+    file: any;
   }
 
   const methods = useForm<IFormData>({
     defaultValues: {
-      name: "",
+      displayName: "",
       email: "",
       password: "",
-      avatar: "",
+      file: "",
     },
     mode: "all",
   });
   const onSubmit = async (formData: IFormData) => {
+    const displayName = formData.displayName;
     const email = formData.email;
     const password = formData.password;
-    const file = formData.avatar;
-
+    const file = formData.file;
+    console.log(formData);
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      const storageRef = ref(storage, "images/rivers.jpg");
+      const storageRef = ref(storage, 'images/MA.jpg');
       const uploadTask = uploadBytesResumable(storageRef, file);
+    
       uploadTask.on(
         "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
+
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+
+            try {
+              await updateProfile(res.user, {
+                displayName,
+                photoURL: downloadURL,
+              });
+              console.log(2);
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName,
+                email,
+                photoURL: downloadURL,
+              });
+            } catch (err) {
+              console.log(err);
+              setErr(true);
+            }
+          });
         },
         (error) => {
+          console.log(error, "aaaa");
           setErr(true);
-        },
-        () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
-          });
         }
       );
     } catch (error: any) {
@@ -94,8 +95,8 @@ const Registration = () => {
             </div>
             <div className="input">
               <BasicInput
-                name="name"
-                label="Display ame"
+                name="displayName"
+                label="Display name"
                 rules={requiredRules}
               />
             </div>
@@ -111,18 +112,18 @@ const Registration = () => {
             </div>
             <div className="inputAvatar">
               <TextField
-                name="avatar"
+                name="file"
                 type="file"
                 id="file"
-                style={{ display: "none" }}
+                //style={{ display: "none" }}
               />
-              <label htmlFor="file" className="avatarLabel">
+              {/* <label htmlFor="file" className="avatarLabel">
                 <div>
                   {" "}
                   <img src={AddAvatar} alt="" className="img" />
                 </div>
                 <div className="avatarText">Add an avatar</div>
-              </label>
+              </label> */}
             </div>
             <div>
               <button className="loginBtn">Sign In</button>
@@ -133,6 +134,7 @@ const Registration = () => {
             <p>
               You don't have account??? <Link to={ERoutes.LOGIN}>Login</Link>
             </p>
+            
           </div>
         </div>
       </div>
