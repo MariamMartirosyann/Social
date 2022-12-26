@@ -1,6 +1,6 @@
 import { TextField, Typography } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { requiredRules } from "../../constants";
 import { ERoutes } from "../../routes/constants";
 import BasicInput from "../../shared/components/basicInput";
@@ -9,19 +9,18 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "../../../firebase";
 import "./style.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 
 const Registration = () => {
   const [err, setErr] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   interface IFormData {
     email: string;
     displayName: string;
     password: string;
-    file: any;
+    file: any | null | undefined;
   }
-
   const methods = useForm<IFormData>({
     defaultValues: {
       displayName: "",
@@ -31,24 +30,39 @@ const Registration = () => {
     },
     mode: "all",
   });
+
+  const fileInputRef = useRef<any>(null);
+
+  const handleFileInputClick = () => {
+    fileInputRef?.current?.click();
+  };
+
+
+  const onFileInputChange = async (e: any | null) => {
+    const file = e.target.files[0];
+    fileInputRef.current.value = null;
+    methods.setValue("file", file);
+  
+  };
+
   const onSubmit = async (formData: IFormData) => {
     const displayName = formData.displayName;
     const email = formData.email;
     const password = formData.password;
-    const file = formData.file;
+
+    navigate(ERoutes.HOME);
     console.log(formData);
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      const storageRef = ref(storage, 'images/MA.jpg');
-      const uploadTask = uploadBytesResumable(storageRef, file);
-    
+      const storageRef = ref(storage, displayName);
+      const uploadTask = uploadBytesResumable(storageRef, formData.file);
+
       uploadTask.on(
         "state_changed",
 
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-
             try {
               await updateProfile(res.user, {
                 displayName,
@@ -61,6 +75,7 @@ const Registration = () => {
                 email,
                 photoURL: downloadURL,
               });
+              await setDoc(doc(db, "userChats", res.user.uid), {});
             } catch (err) {
               console.log(err);
               setErr(true);
@@ -115,15 +130,18 @@ const Registration = () => {
                 name="file"
                 type="file"
                 id="file"
-                //style={{ display: "none" }}
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onChange={onFileInputChange}
+                onClick={handleFileInputClick}
               />
-              {/* <label htmlFor="file" className="avatarLabel">
+              <label htmlFor="file" className="avatarLabel">
                 <div>
                   {" "}
                   <img src={AddAvatar} alt="" className="img" />
                 </div>
                 <div className="avatarText">Add an avatar</div>
-              </label> */}
+              </label>
             </div>
             <div>
               <button className="loginBtn">Sign In</button>
@@ -134,7 +152,6 @@ const Registration = () => {
             <p>
               You don't have account??? <Link to={ERoutes.LOGIN}>Login</Link>
             </p>
-            
           </div>
         </div>
       </div>

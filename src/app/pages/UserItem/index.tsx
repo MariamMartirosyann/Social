@@ -43,6 +43,7 @@ const UserItem = () => {
           </div>
           <div className="lastSeen">last seen recently</div>
         </Grid>
+        
         <div className="iconsDiv">
           <span className="icon">
             <SearchIcon />

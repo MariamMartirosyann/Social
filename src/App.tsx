@@ -7,7 +7,7 @@ import "./App.css";
 function App() {
   return (
     <div>
-      <Routes isLoggedIn={false} />
+      <Routes isLoggedIn={true} />
     </div>
   );
 }

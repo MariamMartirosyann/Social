@@ -9,19 +9,19 @@ export const store = configureStore({
   }
 })
 
-store.subscribe(
-  // we use debounce to save the state once each 800ms
-  // for better performances in case multiple changes occur in a short time
-  () => {
-    saveState(store.getState());
-  },
-);
+// store.subscribe(
+//   // we use debounce to save the state once each 800ms
+//   // for better performances in case multiple changes occur in a short time
+//   () => {
+//     saveState(store.getState());
+//   },
+// );
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+// export type AppDispatch = typeof store.dispatch;
+// export type RootState = ReturnType<typeof store.getState>;
+// export type AppThunk<ReturnType = void> = ThunkAction<
+//   ReturnType,
+//  // RootState,
+//   unknown,
+//   Action<string>
+// >;

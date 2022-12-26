@@ -20,10 +20,8 @@ const LoginRoutes = [
           path: ERoutes.REGISTER,
           element: <Registration/>,
         },
-        {
-          path: "*",
-          element: <Navigate to={`/${ERoutes.LOGIN}`} />,
-        },
+      
+        
       ],
     },
   ];

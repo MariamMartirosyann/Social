@@ -7,6 +7,7 @@ const secondaryRoutes = [
     path: "/",
     element: <MinimalLayout />,
     children: [{ path: ERoutes.NOT_FOUND, element: <NotFound /> }],
+    
   },
 ];
 

@@ -1,7 +1,7 @@
 export enum ERoutes {
   HOME = "home",
-  USER_ITEM = "/user/:id",
+  USER_ITEM = "user/:id",
   LOGIN = "login",
-  REGISTER = "/register",
+  REGISTER = "register",
   NOT_FOUND = "404",
 }
